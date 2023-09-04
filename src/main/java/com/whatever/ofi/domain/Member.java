@@ -1,6 +1,7 @@
 package com.whatever.ofi.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter @Setter
 @ToString(exclude = "password")
+@NoArgsConstructor
 public class Member {
 
     @Id
@@ -26,11 +28,7 @@ public class Member {
 
     private int weight;
 
-    public void Member(String email, String password, String nickname, int height, int weight) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.height = height;
-        this.weight = weight;
-    }
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private Board_like boardLike;
+
 }
