@@ -23,15 +23,15 @@ public class MemberController {
         return "success";
     }
 
-    @PostMapping("/page1")
-    public String page1(@RequestBody TestDto dto, HttpSession session) {
-        session.setAttribute("name", dto.getName());
-        session.setAttribute("type", dto.getType());
-        return dto.getName();
-    }
-
-    @PostMapping("/page2")
-    public String page2(HttpSession session) {
-        return session.getAttribute("name") + " " + session.getAttribute("type");
-    }
+//    @PostMapping("/page1")
+//    public String page1(@RequestBody TestDto dto, HttpSession session) {
+//        session.setAttribute("name", dto.getName());
+//        session.setAttribute("type", dto.getType());
+//        return dto.getName();
+//    }
+//
+//    @PostMapping("/page2")
+//    public String page2(HttpSession session) {
+//        return session.getAttribute("name") + " " + session.getAttribute("type");
+//    }
 }

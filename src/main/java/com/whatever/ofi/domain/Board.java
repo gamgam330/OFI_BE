@@ -1,10 +1,6 @@
 package com.whatever.ofi.domain;
 
-import jdk.dynalink.linker.LinkerServices;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,8 +8,8 @@ import java.util.List;
 
 @Entity
 @ToString
-@Getter @Setter
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 
     @Id
@@ -26,7 +22,7 @@ public class Board {
     private Coordinator coordinator;
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Board_img> urls = new ArrayList<>();
+    private List<BoardImage> urls = new ArrayList<>();
 
     private String style;
     private int like_count;
@@ -35,8 +31,12 @@ public class Board {
     private String content;
     private String image_url;
 
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
+
     //==연관관계 메서드==//
-    public void addUrl(Board_img boardImg) {
+    public void addUrl(BoardImage boardImg) {
         urls.add(boardImg);
         boardImg.setBoard(this);
     }

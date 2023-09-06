@@ -1,18 +1,14 @@
 package com.whatever.ofi.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.apache.kafka.common.protocol.types.Field;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @ToString
-@Getter @Setter
-@NoArgsConstructor
-public class Board_img {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class BoardImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_img_id")
@@ -22,4 +18,8 @@ public class Board_img {
     private Board board;
 
     private String img_url;
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 }

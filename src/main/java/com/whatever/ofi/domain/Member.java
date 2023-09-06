@@ -1,16 +1,13 @@
 package com.whatever.ofi.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter
 @ToString(exclude = "password")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
     @Id
@@ -29,6 +26,6 @@ public class Member {
     private int weight;
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
-    private Board_like boardLike;
+    private BoardLike boardLike;
 
 }

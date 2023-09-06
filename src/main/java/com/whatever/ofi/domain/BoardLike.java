@@ -1,17 +1,14 @@
 package com.whatever.ofi.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @ToString
-@Getter @Setter
-@NoArgsConstructor
-public class Board_like {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class BoardLike {
     @Id
     @Column(name = "board_like_id")
     private Long id;
