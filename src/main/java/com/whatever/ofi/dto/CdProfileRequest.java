@@ -7,6 +7,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CdProfileRequest {
+    private Long coordinator_id;
     private String nickname;
 
     private String sns_url;

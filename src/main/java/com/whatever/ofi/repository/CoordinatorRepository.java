@@ -14,4 +14,8 @@ public class CoordinatorRepository {
     public void save(Coordinator coordinator) {
         em.persist(coordinator);
     }
+
+    public Coordinator findOne(Long id) {
+        return em.find(Coordinator.class, id);
+    }
 }

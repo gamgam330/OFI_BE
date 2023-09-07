@@ -12,7 +12,10 @@ public class BoardRepository {
     @PersistenceContext
     EntityManager em;
 
-    @Transactional
+    public Board findOne(Long id) {
+       return em.find(Board.class, id);
+    }
+
     public void save(Board board) {
         em.persist(board);
     }

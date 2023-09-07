@@ -10,9 +10,13 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CoordinatorProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profile_id")
+    @Column(name = "coordinator_id")
     private Long id;
+
+    @MapsId
+    @JoinColumn(name = "coordinator_id")
+    @OneToOne
+    private Coordinator coordinator;
 
     private String nickname;
 
@@ -31,6 +35,10 @@ public class CoordinatorProfile {
     private int total_like;
 
     private int request_count;
+
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
 
     @Builder
     public CoordinatorProfile(String nickname, String sns_url, String image_url, String content,

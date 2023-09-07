@@ -18,12 +18,13 @@ public class CoordinatorController {
 
     @PostMapping("/register")
     public String register(@RequestBody Coordinator coordinator) {
-        System.out.println(coordinator.toString());
+        coordinatorService.join(coordinator);
         return "success";
     }
 
     @PostMapping("/profile")
     public String createProfile(@RequestBody CdProfileRequest dto) {
+
         System.out.println(dto.toString());
         coordinatorProfileService.join(dto);
         return "success";

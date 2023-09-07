@@ -31,6 +31,10 @@ public class Board {
     private String content;
     private String image_url;
 
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
     public void setCoordinator(Coordinator coordinator) {
         this.coordinator = coordinator;
     }
@@ -54,5 +58,16 @@ public class Board {
         }
 
         this.like_count = resultLike;
+    }
+
+    @Builder
+    public Board(String style, int like_count, String season,
+                 String situation, String content, String image_url){
+        this.style = style;
+        this.like_count = like_count;
+        this.season = season;
+        this.situation = situation;
+        this.content = content;
+        this.image_url = image_url;
     }
 }
