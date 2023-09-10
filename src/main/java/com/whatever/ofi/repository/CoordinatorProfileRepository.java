@@ -17,9 +17,4 @@ public class CoordinatorProfileRepository {
         em.persist(profile);
     }
 
-    public List<String> findByNickname(String nickname) {
-        return em.createQuery("select c.nickname from CoordinatorProfile c where c.nickname = :nickname", String.class)
-                .setParameter("nickname", nickname)
-                .getResultList();
-    }
 }

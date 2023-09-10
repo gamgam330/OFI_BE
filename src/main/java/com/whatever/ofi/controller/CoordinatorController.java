@@ -30,10 +30,4 @@ public class CoordinatorController {
         coordinatorProfileService.join(dto);
         return "success";
     }
-
-    @GetMapping("/check/nickname")
-    public String validateDuplicateNickname(@RequestParam String nickname) {
-        return coordinatorProfileService.availableNickname(nickname) ?
-        "available" : "duplicate";
-    }
 }

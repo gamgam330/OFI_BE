@@ -26,9 +26,4 @@ public class CoordinatorProfileService {
         profile.setCoordinator(coordinatorRepository.findOne(dto.getCoordinator_id()));
         coordinatorProfileRepository.save(profile);
     }
-
-    public boolean availableNickname(String nickname) {
-        List<String> findNickname = coordinatorProfileRepository.findByNickname(nickname);
-        return findNickname.isEmpty() ? true : false;
-    }
 }
