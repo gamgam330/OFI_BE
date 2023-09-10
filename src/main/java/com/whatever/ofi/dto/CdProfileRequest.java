@@ -1,5 +1,6 @@
 package com.whatever.ofi.dto;
 
+import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.domain.CoordinatorProfile;
 import lombok.Getter;
 import lombok.ToString;
@@ -16,7 +17,7 @@ public class CdProfileRequest {
 
     private String content;
 
-    private int gender;
+    private Gender gender;
 
     private int height;
 

@@ -20,4 +20,5 @@ public class BoardRepository {
         em.persist(board);
     }
 
+
 }

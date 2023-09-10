@@ -28,4 +28,10 @@ public class Coordinator {
         boards.add(board);
         board.setCoordinator(this);
     }
+
+    @Builder
+    public Coordinator(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

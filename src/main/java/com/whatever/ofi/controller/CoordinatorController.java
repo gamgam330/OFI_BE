@@ -2,6 +2,7 @@ package com.whatever.ofi.controller;
 
 import com.whatever.ofi.domain.Coordinator;
 import com.whatever.ofi.dto.CdProfileRequest;
+import com.whatever.ofi.dto.CoordinatorRequest;
 import com.whatever.ofi.service.CoordinatorProfileService;
 import com.whatever.ofi.service.CoordinatorService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class CoordinatorController {
     private final CoordinatorProfileService coordinatorProfileService;
 
     @PostMapping("/register")
-    public String register(@RequestBody Coordinator coordinator) {
-        coordinatorService.join(coordinator);
+    public String register(@RequestBody CoordinatorRequest dto) {
+        coordinatorService.join(dto);
         return "success";
     }
 
@@ -31,7 +32,8 @@ public class CoordinatorController {
     }
 
     @GetMapping("/check/nickname")
-    public String checkNickname(@RequestParam String nickname) {
-        return "success";
+    public String validateDuplicateNickname(@RequestParam String nickname) {
+        return coordinatorProfileService.availableNickname(nickname) ?
+        "available" : "duplicate";
     }
 }

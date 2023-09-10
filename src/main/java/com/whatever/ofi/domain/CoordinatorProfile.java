@@ -1,5 +1,6 @@
 package com.whatever.ofi.domain;
 
+import com.whatever.ofi.Enum.Gender;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,7 +27,7 @@ public class CoordinatorProfile {
 
     private String content;
 
-    private int gender;
+    private Gender gender;
 
     private int height;
 
@@ -42,7 +43,7 @@ public class CoordinatorProfile {
 
     @Builder
     public CoordinatorProfile(String nickname, String sns_url, String image_url, String content,
-                              int gender, int height, int weight, int total_like, int request_count){
+                              Gender gender, int height, int weight, int total_like, int request_count){
         this.nickname = nickname;
         this.sns_url = sns_url;
         this.image_url = image_url;

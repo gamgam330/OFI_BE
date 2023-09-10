@@ -24,6 +24,7 @@ public class BoardController {
     @PostMapping("/image")
     public String addImage(@RequestBody BoardImageRequest dto) {
         System.out.println(dto.toString());
+        boardService.insertImage(dto);
         return "success";
     }
 }

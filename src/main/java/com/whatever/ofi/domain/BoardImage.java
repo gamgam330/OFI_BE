@@ -15,11 +15,16 @@ public class BoardImage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "board_id")
     private Board board;
 
     private String img_url;
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public BoardImage(String img_url) {
+        this.img_url = img_url;
     }
 }

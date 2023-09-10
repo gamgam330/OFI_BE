@@ -1,17 +1,17 @@
 package com.whatever.ofi.repository;
 
-import com.whatever.ofi.domain.Member;
+import com.whatever.ofi.domain.BoardImage;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class MemberRepository {
+public class BoardImageRepository {
     @PersistenceContext
-    private EntityManager em;
+    EntityManager em;
 
-    public void save(Member member) {
-        em.persist(member);
+    public void save(BoardImage boardImage) {
+        em.persist(boardImage);
     }
 }
