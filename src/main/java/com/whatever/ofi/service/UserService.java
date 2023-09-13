@@ -2,8 +2,10 @@ package com.whatever.ofi.service;
 
 import com.whatever.ofi.domain.User;
 import com.whatever.ofi.domain.UserProfile;
+import com.whatever.ofi.domain.UserStyle;
 import com.whatever.ofi.dto.UserProfileRequest;
 import com.whatever.ofi.dto.UserRequest;
+import com.whatever.ofi.dto.UserStyleRequest;
 import com.whatever.ofi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,17 @@ public class UserService {
         userProfile.setUser(user);
 
         userRepository.saveProfile(userProfile);
+    }
+
+    @Transactional
+    public void addStyle(UserStyleRequest dto) {
+        User user = userRepository.findOne(dto.getUser_id());
+
+        for(String style : dto.getStyles()) {
+            UserStyle userStyle = new UserStyle(style);
+            user.addStyle(userStyle);
+
+            userRepository.saveStyle(userStyle);
+        }
     }
 }

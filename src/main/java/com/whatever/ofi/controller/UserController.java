@@ -1,8 +1,10 @@
 package com.whatever.ofi.controller;
 
 import com.whatever.ofi.domain.User;
+import com.whatever.ofi.domain.UserStyle;
 import com.whatever.ofi.dto.UserProfileRequest;
 import com.whatever.ofi.dto.UserRequest;
+import com.whatever.ofi.dto.UserStyleRequest;
 import com.whatever.ofi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,12 @@ public class UserController {
     @PostMapping("/profile")
     public String createProfile(@RequestBody UserProfileRequest dto){
         userService.addProfile(dto);
+        return "success";
+    }
+
+    @PostMapping("style")
+    public String createStyle(@RequestBody UserStyleRequest dto) {
+        userService.addStyle(dto);
         return "success";
     }
 

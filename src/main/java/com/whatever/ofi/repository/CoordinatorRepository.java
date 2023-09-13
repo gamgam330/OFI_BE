@@ -1,6 +1,7 @@
 package com.whatever.ofi.repository;
 
 import com.whatever.ofi.domain.Coordinator;
+import com.whatever.ofi.domain.CoordinatorStyle;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,5 +19,9 @@ public class CoordinatorRepository {
 
     public Coordinator findOne(Long id) {
         return em.find(Coordinator.class, id);
+    }
+
+    public void saveStyle(CoordinatorStyle coordinatorStyle) {
+        em.persist(coordinatorStyle);
     }
 }

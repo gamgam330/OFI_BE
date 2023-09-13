@@ -10,17 +10,19 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserStyle {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @MapsId
-    @JoinColumn(name = "user_id")
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     private String style;
 
-    @Builder
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public UserStyle(String style) {
         this.style = style;
     }

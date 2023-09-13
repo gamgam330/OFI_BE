@@ -12,7 +12,6 @@ public class CoordinatorProfileRepository {
 
     @PersistenceContext
     EntityManager em;
-
     public void save(CoordinatorProfile profile) {
         em.persist(profile);
     }

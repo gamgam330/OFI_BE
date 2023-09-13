@@ -1,8 +1,8 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.domain.Coordinator;
-import com.whatever.ofi.dto.CdProfileRequest;
+import com.whatever.ofi.dto.CoordinatorProfileRequest;
 import com.whatever.ofi.dto.CoordinatorRequest;
+import com.whatever.ofi.dto.CoordinatorStyleRequest;
 import com.whatever.ofi.service.CoordinatorProfileService;
 import com.whatever.ofi.service.CoordinatorService;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,16 @@ public class CoordinatorController {
     }
 
     @PostMapping("/profile")
-    public String createProfile(@RequestBody CdProfileRequest dto) {
+    public String createProfile(@RequestBody CoordinatorProfileRequest dto) {
 
         System.out.println(dto.toString());
         coordinatorProfileService.join(dto);
+        return "success";
+    }
+
+    @PostMapping("style")
+    public String createStyle(@RequestBody CoordinatorStyleRequest dto) {
+
         return "success";
     }
 }

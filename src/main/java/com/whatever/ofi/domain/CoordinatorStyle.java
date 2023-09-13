@@ -10,17 +10,19 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CoordinatorStyle {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "coordinator_id")
     private Long id;
 
-    @MapsId
-    @JoinColumn(name = "coordinator_id")
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Coordinator coordinator;
 
     private String style;
 
-    @Builder
+    public void setCoordinator(Coordinator coordinator) {
+        this.coordinator = coordinator;
+    }
+
     public CoordinatorStyle(String style) {
         this.style = style;
     }

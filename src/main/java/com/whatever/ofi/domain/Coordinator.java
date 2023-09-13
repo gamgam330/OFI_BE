@@ -23,10 +23,18 @@ public class Coordinator {
     @OneToMany(mappedBy = "coordinator", cascade = CascadeType.ALL)
     private List<Board> boards = new ArrayList<>();
 
+    @OneToMany(mappedBy = "coordinator", cascade = CascadeType.ALL)
+    private List<CoordinatorStyle> styles = new ArrayList<>();
+
     //==연관관계 메서드==//
     public void addBoard(Board board) {
         boards.add(board);
         board.setCoordinator(this);
+    }
+
+    public void addStyle(CoordinatorStyle coordinatorStyle) {
+        styles.add(coordinatorStyle);
+        coordinatorStyle.setCoordinator(this);
     }
 
     @Builder
