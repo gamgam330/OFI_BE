@@ -1,16 +1,14 @@
-package com.whatever.ofi.dto;
+package com.whatever.ofi.requestDto;
 
-import com.whatever.ofi.domain.Coordinator;
+import com.whatever.ofi.domain.User;
 import lombok.Getter;
 
 @Getter
-public class CoordinatorRequest {
+public class UserRequest {
     private String email;
-
     private String password;
-
-    public Coordinator toEntity() {
-        return Coordinator.builder()
+    public User toEntity() {
+        return User.builder()
                 .email(email)
                 .password(password)
                 .build();

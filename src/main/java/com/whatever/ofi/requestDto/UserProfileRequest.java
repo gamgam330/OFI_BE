@@ -1,13 +1,17 @@
-package com.whatever.ofi.dto;
+package com.whatever.ofi.requestDto;
 
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.Enum.Shape;
-import com.whatever.ofi.domain.UserProfile;
+import com.whatever.ofi.domain.User;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class UserProfileRequest {
-    private Long user_id;
+    private String email;
+
+    private String password;
 
     private String nickname;
 
@@ -19,8 +23,10 @@ public class UserProfileRequest {
 
     private Shape shape;
 
-    public UserProfile toEntity() {
-        return UserProfile.builder()
+    public User toEntity() {
+        return User.builder()
+                .email(email)
+                .password(password)
                 .gender(gender)
                 .height(height)
                 .weight(weight)

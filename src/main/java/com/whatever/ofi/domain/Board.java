@@ -1,5 +1,6 @@
 package com.whatever.ofi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Board {
     @JoinColumn(name = "coordinator_id")
     private Coordinator coordinator;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BoardImage> urls = new ArrayList<>();
 

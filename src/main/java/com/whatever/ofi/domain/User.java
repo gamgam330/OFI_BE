@@ -1,5 +1,7 @@
 package com.whatever.ofi.domain;
 
+import com.whatever.ofi.Enum.Gender;
+import com.whatever.ofi.Enum.Shape;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +23,18 @@ public class User {
 
     private String password;
 
+    private String nickname;
+
+    private int height;
+
+    private int weight;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Enumerated(EnumType.STRING)
+    private Shape shape;
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private BoardLike boardLike;
 
@@ -34,8 +48,14 @@ public class User {
     }
 
     @Builder
-    public User(String email, String password) {
+    public User(String email, String password, String nickname, int height, int weight,
+                Gender gender, Shape shape) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
+        this.height = height;
+        this.weight = weight;
+        this.gender = gender;
+        this.shape = shape;
     }
 }

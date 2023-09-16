@@ -1,4 +1,4 @@
-package com.whatever.ofi.dto;
+package com.whatever.ofi.requestDto;
 
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;

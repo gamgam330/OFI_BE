@@ -1,4 +1,4 @@
-package com.whatever.ofi.dto;
+package com.whatever.ofi.requestDto;
 
 import com.whatever.ofi.domain.Board;
 import lombok.Getter;

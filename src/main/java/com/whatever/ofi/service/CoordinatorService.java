@@ -1,13 +1,17 @@
 package com.whatever.ofi.service;
 
+import com.whatever.ofi.domain.Board;
 import com.whatever.ofi.domain.Coordinator;
 import com.whatever.ofi.domain.CoordinatorStyle;
-import com.whatever.ofi.dto.CoordinatorRequest;
-import com.whatever.ofi.dto.CoordinatorStyleRequest;
+import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
+import com.whatever.ofi.requestDto.CoordinatorRequest;
+import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
 import com.whatever.ofi.repository.CoordinatorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,7 +21,7 @@ public class CoordinatorService {
     private final CoordinatorRepository coordinatorRepository;
 
     @Transactional
-    public void join(CoordinatorRequest dto) {
+    public void join(CoordinatorProfileRequest dto) {
         coordinatorRepository.save(dto.toEntity());
     }
 
@@ -31,5 +35,9 @@ public class CoordinatorService {
 
             coordinatorRepository.saveStyle(coordinatorStyle);
         }
+    }
+
+    public List<Board> testShow() {
+        return coordinatorRepository.findMainPage();
     }
 }

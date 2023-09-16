@@ -11,11 +11,11 @@ public class CheckRepository {
     @PersistenceContext
     EntityManager em;
     public List<String> findByNickname(String nickname) {
-        List<String> nicknames = em.createQuery("select c.nickname from CoordinatorProfile c where c.nickname = :nickname", String.class)
+        List<String> nicknames = em.createQuery("select c.nickname from Coordinator c where c.nickname = :nickname", String.class)
                 .setParameter("nickname", nickname)
                 .getResultList();
 
-        nicknames.addAll(em.createQuery("select u.nickname from UserProfile u where u.nickname = :nickname", String.class)
+        nicknames.addAll(em.createQuery("select u.nickname from User u where u.nickname = :nickname", String.class)
                 .setParameter("nickname", nickname)
                 .getResultList());
 

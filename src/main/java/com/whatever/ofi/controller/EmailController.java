@@ -1,6 +1,6 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.dto.EmailAuthDto;
+import com.whatever.ofi.requestDto.EmailAuthDto;
 import com.whatever.ofi.service.EmailAuthService;
 import com.whatever.ofi.service.MailService;
 import lombok.RequiredArgsConstructor;

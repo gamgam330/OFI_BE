@@ -1,7 +1,6 @@
 package com.whatever.ofi.controller;
 
 import com.whatever.ofi.service.CheckService;
-import com.whatever.ofi.service.CoordinatorProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

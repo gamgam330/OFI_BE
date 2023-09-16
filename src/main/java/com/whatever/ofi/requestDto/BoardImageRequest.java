@@ -1,4 +1,4 @@
-package com.whatever.ofi.dto;
+package com.whatever.ofi.requestDto;
 
 import lombok.Getter;
 import lombok.ToString;

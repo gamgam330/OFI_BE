@@ -1,8 +1,7 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.dto.BoardImageRequest;
-import com.whatever.ofi.dto.BoardRequest;
-import com.whatever.ofi.repository.BoardRepository;
+import com.whatever.ofi.requestDto.BoardImageRequest;
+import com.whatever.ofi.requestDto.BoardRequest;
 import com.whatever.ofi.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

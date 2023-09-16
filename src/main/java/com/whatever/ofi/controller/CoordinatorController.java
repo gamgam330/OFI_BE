@@ -1,12 +1,14 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.dto.CoordinatorProfileRequest;
-import com.whatever.ofi.dto.CoordinatorRequest;
-import com.whatever.ofi.dto.CoordinatorStyleRequest;
-import com.whatever.ofi.service.CoordinatorProfileService;
+import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
+import com.whatever.ofi.requestDto.CoordinatorRequest;
+import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
 import com.whatever.ofi.service.CoordinatorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,19 +17,19 @@ import org.springframework.web.bind.annotation.*;
 public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
-    private final CoordinatorProfileService coordinatorProfileService;
+
+    private final BCryptPasswordEncoder encoder;
 
     @PostMapping("/register")
-    public String register(@RequestBody CoordinatorRequest dto) {
-        coordinatorService.join(dto);
+    public String register(@RequestBody CoordinatorRequest dto, HttpSession session) {
+        session.setAttribute("email", dto.getEmail());
+        session.setAttribute("password", encoder.encode(dto.getPassword()));
         return "success";
     }
 
     @PostMapping("/profile")
     public String createProfile(@RequestBody CoordinatorProfileRequest dto) {
-
-        System.out.println(dto.toString());
-        coordinatorProfileService.join(dto);
+        coordinatorService.join(dto);
         return "success";
     }
 
