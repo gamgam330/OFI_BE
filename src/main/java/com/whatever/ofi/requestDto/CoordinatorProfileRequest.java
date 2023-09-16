@@ -5,6 +5,9 @@ import com.whatever.ofi.domain.Coordinator;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @ToString
 public class CoordinatorProfileRequest {
@@ -31,8 +34,11 @@ public class CoordinatorProfileRequest {
 
     private int request_count;
 
+    private List<String> styles = new ArrayList<>();
+
     public Coordinator toEntity() {
         return Coordinator.builder()
+                .styles(styles)
                 .email(email)
                 .password(password)
                 .nickname(nickname)

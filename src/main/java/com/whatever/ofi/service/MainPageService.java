@@ -20,8 +20,6 @@ public class MainPageService {
 
     public List<UserMainPageRes> searchCoordinator() {
 
-        List<UserMainPageRes> profiles = coordinatorRepository.findPopularCoordinator();
-
-        return profiles;
+        return coordinatorRepository.findPopularCoordinator();
     }
 }

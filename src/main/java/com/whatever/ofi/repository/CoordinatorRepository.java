@@ -2,7 +2,6 @@ package com.whatever.ofi.repository;
 
 import com.whatever.ofi.domain.Board;
 import com.whatever.ofi.domain.Coordinator;
-import com.whatever.ofi.domain.CoordinatorStyle;
 import com.whatever.ofi.responseDto.UserMainPageRes;
 import org.springframework.stereotype.Repository;
 
@@ -27,19 +26,19 @@ public class CoordinatorRepository {
         return em.find(Coordinator.class, id);
     }
 
-    public void saveStyle(CoordinatorStyle coordinatorStyle) {
-        em.persist(coordinatorStyle);
-    }
+//    public void saveStyle(CoordinatorStyle coordinatorStyle) {
+//        em.persist(coordinatorStyle);
+//    }
 
-    public List<String> findStyle(Long id) {
-        return em.createQuery("select c.style from CoordinatorStyle c where id =: id", String.class)
-                .setParameter("id", id)
-                .getResultList();
-    }
+//    public List<String> findStyle(Long id) {
+//        return em.createQuery("select c.style from CoordinatorStyle c where id =: id", String.class)
+//                .setParameter("id", id)
+//                .getResultList();
+//    }
     public List<UserMainPageRes> findPopularCoordinator() {
         List<Object[]> resultList = em.createQuery(
-                " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count" +
-                        " from Board b inner join  b.coordinator c " +
+                " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count, c.styles " +
+                        " from Board b, Coordinator c " +
                         " where b.coordinator.id = c.id " +
                         " group by c.id " , Object[].class)
                 .setMaxResults(20)
@@ -49,11 +48,13 @@ public class CoordinatorRepository {
 
         for (Object[] result : resultList) {
             UserMainPageRes dto = new UserMainPageRes();
+
             dto.setNickname((String) result[0]);
             dto.setProfile_image((String) result[1]);
             dto.setBoard_image((String) result[2]);
             dto.setTotal_like((Integer) result[3]);
             dto.setRequest_count((Integer) result[4]);
+            dto.setStyles((List<String>) result[5]);
             dtos.add(dto);
         }
 

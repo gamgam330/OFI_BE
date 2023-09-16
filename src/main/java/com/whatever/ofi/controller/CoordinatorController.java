@@ -33,9 +33,9 @@ public class CoordinatorController {
         return "success";
     }
 
-    @PostMapping("style")
-    public String createStyle(@RequestBody CoordinatorStyleRequest dto) {
-
-        return "success";
-    }
+//    @PostMapping("style")
+//    public String createStyle(@RequestBody CoordinatorStyleRequest dto) {
+//        coordinatorService.addStyle(dto);
+//        return "success";
+//    }
 }

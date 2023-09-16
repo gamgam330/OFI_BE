@@ -2,6 +2,7 @@ package com.whatever.ofi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whatever.ofi.Enum.Gender;
+import com.whatever.ofi.config.StringListConverter;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,8 +28,8 @@ public class Coordinator {
     private List<Board> boards = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "coordinator", cascade = CascadeType.ALL)
-    private List<CoordinatorStyle> styles = new ArrayList<>();
+    @Convert(converter = StringListConverter.class)
+    private List<String> styles = new ArrayList<>();
 
     private String nickname;
 
@@ -54,14 +55,14 @@ public class Coordinator {
         board.setCoordinator(this);
     }
 
-    public void addStyle(CoordinatorStyle coordinatorStyle) {
-        styles.add(coordinatorStyle);
-        coordinatorStyle.setCoordinator(this);
-    }
+//    public void addStyle(CoordinatorStyle coordinatorStyle) {
+//        styles.add(coordinatorStyle);
+//        coordinatorStyle.setCoordinator(this);
+//    }
 
     @Builder
     public Coordinator(String email, String password, String nickname, String sns_url, String image_url, String content,
-                              Gender gender, int height, int weight, int total_like, int request_count){
+                              Gender gender, int height, int weight, int total_like, int request_count, List<String> styles){
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -73,5 +74,6 @@ public class Coordinator {
         this.weight = weight;
         this.total_like = total_like;
         this.request_count = request_count;
+        this.styles.addAll(styles);
     }
 }
