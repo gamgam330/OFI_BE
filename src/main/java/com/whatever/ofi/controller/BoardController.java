@@ -2,6 +2,7 @@ package com.whatever.ofi.controller;
 
 import com.whatever.ofi.requestDto.BoardImageRequest;
 import com.whatever.ofi.requestDto.BoardRequest;
+import com.whatever.ofi.responseDto.BoardDetailRes;
 import com.whatever.ofi.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +25,10 @@ public class BoardController {
     public String addImage(@RequestBody BoardImageRequest dto) {
         boardService.insertImage(dto);
         return "success";
+    }
+
+    @GetMapping("/show")
+    public BoardDetailRes showBoard(@RequestParam Long id) {
+        return boardService.findBoardDetail(id);
     }
 }

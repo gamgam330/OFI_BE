@@ -8,6 +8,7 @@ import com.whatever.ofi.requestDto.BoardRequest;
 import com.whatever.ofi.repository.BoardImageRepository;
 import com.whatever.ofi.repository.BoardRepository;
 import com.whatever.ofi.repository.CoordinatorRepository;
+import com.whatever.ofi.responseDto.BoardDetailRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +41,9 @@ public class BoardService {
             board.addUrl(boardImage);
             boardImageRepository.save(boardImage);
         }
+    }
+
+    public BoardDetailRes findBoardDetail(Long id) {
+        return boardRepository.findBoardDetail(id);
     }
 }

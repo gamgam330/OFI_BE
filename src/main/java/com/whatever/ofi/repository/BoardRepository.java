@@ -1,5 +1,6 @@
 package com.whatever.ofi.repository;
 
+import com.fasterxml.jackson.annotation.JsonTypeId;
 import com.whatever.ofi.domain.Board;
 import com.whatever.ofi.responseDto.BoardDetailRes;
 import com.whatever.ofi.responseDto.UserMainPageRes;
@@ -24,32 +25,24 @@ public class BoardRepository {
         em.persist(board);
     }
 
-    public List<BoardDetailRes> findBoardDetail(Long id) {
-        Object[] resultBoard = em.createQuery(
-                        " select c.nickname, c.image_url, b.image_url, b.like_count, c.request_count, b.style, b.content " +
+    public BoardDetailRes findBoardDetail(Long id) {
+        Object[] result =  em.createQuery(
+                        " select c.nickname, c.image_url, b.image_url, b.like_count, c.request_count, b.style, b.content, b.season, b.situation " +
                                 " from Board b, Coordinator c " +
-                                " where b.coordinator.id = c.id and b.id = :id" +
-                                " group by c.id " , Object[].class)
+                                " where b.coordinator.id = c.id and b.id = :id ", Object[].class)
                 .setParameter("id", id)
                 .getSingleResult();
 
-//        List<BoardDetailRes> dtos = new ArrayList<>();
-//
-//        for (Object[] result : resultList) {
-//            BoardDetailRes dto = BoardDetailRes.builder()
-//                    .nickname((String) result[0])
-//                    .profile_image((String) result[1])
-//                    .board_image((String) result[2])
-//                    .like_count((Integer) result[3])
-//                    .request_count((Integer) result[4])
-//                    .style((String) result[5])
-//                    .content((String) result[6])
-//                    .build();
-//
-//            dtos.add(dto);
-//        }
-
-        return dtos;
+        return BoardDetailRes.builder()
+                .nickname((String) result[0])
+                .profile_image((String) result[1])
+                .board_image((String) result[2])
+                .like_count((Integer) result[3])
+                .request_count((Integer) result[4])
+                .style((String) result[5])
+                .content((String) result[6])
+                .season((String) result[7])
+                .situation((String) result[8])
+                .build();
     }
-
 }
