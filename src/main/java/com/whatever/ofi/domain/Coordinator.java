@@ -55,11 +55,6 @@ public class Coordinator {
         board.setCoordinator(this);
     }
 
-//    public void addStyle(CoordinatorStyle coordinatorStyle) {
-//        styles.add(coordinatorStyle);
-//        coordinatorStyle.setCoordinator(this);
-//    }
-
     @Builder
     public Coordinator(String email, String password, String nickname, String sns_url, String image_url, String content,
                               Gender gender, int height, int weight, int total_like, int request_count, List<String> styles){

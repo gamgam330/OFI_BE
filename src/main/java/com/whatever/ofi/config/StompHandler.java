@@ -78,6 +78,8 @@ public class StompHandler implements ChannelInterceptor {
             log.info("SUBSCRIBED {}, {}", name, roomId);
         } else if (StompCommand.DISCONNECT == accessor.getCommand()) { // Websocket 연결 종료
             // 연결이 종료된 클라이언트 sesssionId로 채팅방 id를 얻는다.
+            String myToken = accessor.getFirstNativeHeader("token");
+            String mynickname = util.getNickname(myToken, secretKey);
             String sessionId = (String) message.getHeaders().get("simpSessionId");
             String roomId = chatRoomRepository.getUserEnterRoomId(sessionId);
 
@@ -89,8 +91,8 @@ public class StompHandler implements ChannelInterceptor {
             chatService.sendChatMessage(ChatMessage.builder().type(ChatMessage.MessageType.QUIT).roomId(roomId).sender(name).build());
 
             // 퇴장한 클라이언트의 roomId 맵핑 정보를 삭제한다.
-            chatRoomRepository.removeUserEnterInfo(sessionId);
-            log.info("DISCONNECTED {}, {}", sessionId, roomId);
+            chatRoomRepository.removeUserEnterInfo(mynickname);
+            log.info("DISCONNECTED {}, {}", mynickname, roomId);
         }
         return message;
     }
