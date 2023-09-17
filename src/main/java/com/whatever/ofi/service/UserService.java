@@ -2,7 +2,6 @@ package com.whatever.ofi.service;
 
 import com.whatever.ofi.config.Util;
 import com.whatever.ofi.domain.User;
-import com.whatever.ofi.domain.UserStyle;
 import com.whatever.ofi.requestDto.LoginRequest;
 import com.whatever.ofi.requestDto.UserProfileRequest;
 import com.whatever.ofi.requestDto.UserStyleRequest;
@@ -27,19 +26,6 @@ public class UserService {
     @Transactional
     public void join(UserProfileRequest dto) {
         userRepository.save(dto.toEntity());
-    }
-
-
-    @Transactional
-    public void addStyle(UserStyleRequest dto) {
-        User user = userRepository.findOne(dto.getUser_id());
-
-        for(String style : dto.getStyles()) {
-            UserStyle userStyle = new UserStyle(style);
-            user.addStyle(userStyle);
-
-            userRepository.saveStyle(userStyle);
-        }
     }
 
     public String login(LoginRequest loginRequest) {

@@ -1,7 +1,9 @@
 package com.whatever.ofi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.Enum.Shape;
+import com.whatever.ofi.config.StringListConverter;
 import lombok.*;
 
 import javax.persistence.*;
@@ -38,18 +40,13 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private BoardLike boardLike;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<UserStyle> userStyles = new ArrayList<>();
-
-    //==연관관계 메서드==//
-    public void addStyle(UserStyle userStyle) {
-        userStyles.add(userStyle);
-        userStyle.setUser(this);
-    }
+    @JsonIgnore
+    @Convert(converter = StringListConverter.class)
+    private List<String> styles = new ArrayList<>();
 
     @Builder
     public User(String email, String password, String nickname, int height, int weight,
-                Gender gender, Shape shape) {
+                Gender gender, Shape shape, List<String> styles) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -57,5 +54,6 @@ public class User {
         this.weight = weight;
         this.gender = gender;
         this.shape = shape;
+        this.styles.addAll(styles);
     }
 }

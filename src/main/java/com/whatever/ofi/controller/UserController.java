@@ -40,6 +40,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody UserRequest dto, HttpSession session) {
         String encodePassword = encoder.encode(dto.getPassword());
+
         session.setAttribute("email", dto.getEmail());
         session.setAttribute("password", encoder.encode(encodePassword));
         System.out.println(encodePassword);
@@ -49,12 +50,6 @@ public class UserController {
     @PostMapping("/profile")
     public String createProfile(@RequestBody UserProfileRequest dto){
         userService.join(dto);
-        return "success";
-    }
-
-    @PostMapping("style")
-    public String createStyle(@RequestBody UserStyleRequest dto) {
-        userService.addStyle(dto);
         return "success";
     }
 
@@ -76,7 +71,4 @@ public class UserController {
 
         return "success";
     }
-
-
-
 }

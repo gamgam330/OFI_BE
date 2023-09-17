@@ -1,7 +1,6 @@
 package com.whatever.ofi.repository;
 
 import com.whatever.ofi.domain.User;
-import com.whatever.ofi.domain.UserStyle;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,17 +16,13 @@ public class UserRepository {
         em.persist(user);
     }
 
-    public void saveStyle(UserStyle userStyle) {
-        em.persist(userStyle);
-    }
-
     public User findOne(Long id) {
         return em.find(User.class, id);
     }
 
 
     public String findByEmail(String email) {
-        return em.createQuery("select u from User u where u.email = :email", String.class)
+        return em.createQuery("select u.email from User u where u.email = :email", String.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }

@@ -5,6 +5,10 @@ import com.whatever.ofi.Enum.Shape;
 import com.whatever.ofi.domain.User;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.catalina.LifecycleState;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -23,8 +27,11 @@ public class UserProfileRequest {
 
     private Shape shape;
 
+    private List<String> styles = new ArrayList<>();
+
     public User toEntity() {
         return User.builder()
+                .styles(styles)
                 .email(email)
                 .password(password)
                 .gender(gender)
