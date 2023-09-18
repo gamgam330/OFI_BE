@@ -1,9 +1,11 @@
 package com.whatever.ofi.requestDto;
 
 import com.whatever.ofi.domain.Board;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class BoardRequest {
     private Long coordinator_id;
     private String style;

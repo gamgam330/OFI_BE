@@ -2,14 +2,18 @@ package com.whatever.ofi.requestDto;
 
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.domain.Coordinator;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
+@AllArgsConstructor
 public class CoordinatorProfileRequest {
 
     private String email;

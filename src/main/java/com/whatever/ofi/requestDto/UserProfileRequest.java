@@ -3,7 +3,9 @@ package com.whatever.ofi.requestDto;
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.Enum.Shape;
 import com.whatever.ofi.domain.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.apache.catalina.LifecycleState;
 
@@ -11,7 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
+@AllArgsConstructor
 public class UserProfileRequest {
     private String email;
 

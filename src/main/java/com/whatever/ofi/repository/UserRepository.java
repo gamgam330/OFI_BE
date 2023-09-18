@@ -21,10 +21,10 @@ public class UserRepository {
     }
 
 
-    public String findByEmail(String email) {
-        return em.createQuery("select u.email from User u where u.email = :email", String.class)
+    public List<String> findByEmail(String email) {
+        return em.createQuery("select u.email from User u where u.email = :email ", String.class)
                 .setParameter("email", email)
-                .getSingleResult();
+                .getResultList();
     }
 
     public User findByPassword(String email) {

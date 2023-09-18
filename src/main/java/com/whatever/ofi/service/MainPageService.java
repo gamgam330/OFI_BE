@@ -2,6 +2,8 @@ package com.whatever.ofi.service;
 
 import com.whatever.ofi.domain.Coordinator;
 import com.whatever.ofi.repository.CoordinatorRepository;
+import com.whatever.ofi.repository.MainPageRepository;
+import com.whatever.ofi.responseDto.CoordinatorMainPageRes;
 import com.whatever.ofi.responseDto.UserMainPageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,14 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MainPageService {
-    private final CoordinatorRepository coordinatorRepository;
 
-    public List<UserMainPageRes> searchCoordinator() {
+    private final MainPageRepository mainPageRepository;
 
-        return coordinatorRepository.findPopularCoordinator();
+    public List<UserMainPageRes> searchUserMainPage() {
+        return mainPageRepository.findUserMainPage();
+    }
+
+    public List<CoordinatorMainPageRes> searchCoordinatorMainPage() {
+        return mainPageRepository.findCoordinatorMainPage();
     }
 }

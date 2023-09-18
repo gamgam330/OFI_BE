@@ -31,14 +31,13 @@ public class UserService {
     public String login(LoginRequest loginRequest) {
 
         // 1. Id가 틀린 경우
-        if(userRepository.findByEmail(loginRequest.getEmail()) == null) return "Email Not Found";
+        if(userRepository.findByEmail(loginRequest.getEmail()).isEmpty()) return "Email Not Found";
 
         // 2. Pw가 틀린 경우
         User user = userRepository.findByPassword(loginRequest.getEmail());
-        String encodePassword = encoder.encode(loginRequest.getPassword());
 
         // 사용자가 입력한 비밀번호 (rawPassword)와 암호화된 비밀번호 (hashedPassword)를 비교합니다.
-        if(!encoder.matches(encodePassword, user.getPassword())) return "Password Not Equal";
+        if(!encoder.matches(loginRequest.getPassword(), user.getPassword())) return "Password Not Equal";
 
         String nickname = user.getNickname();
 

@@ -15,6 +15,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    // 게시물 저장
     @PostMapping("/create")
     public String createBoard(@RequestBody BoardRequest dto) {
         boardService.join(dto);
@@ -27,6 +28,7 @@ public class BoardController {
         return "success";
     }
 
+    // 게시물 눌렀을 때 모든 정보 보기
     @GetMapping("/show")
     public BoardDetailRes showBoard(@RequestParam Long id) {
         return boardService.findBoardDetail(id);

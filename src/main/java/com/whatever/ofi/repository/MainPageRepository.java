@@ -1,6 +1,7 @@
 package com.whatever.ofi.repository;
 
 import com.whatever.ofi.responseDto.CoordinatorMainPageRes;
+import com.whatever.ofi.responseDto.UserMainPageRes;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,12 +14,12 @@ public class MainPageRepository {
     @PersistenceContext
     EntityManager em;
 
-    public List<CoordinatorMainPageRes> findPopularCoordinator() {
+    public List<CoordinatorMainPageRes> findCoordinatorMainPage() {
         List<Object[]> resultList = em.createQuery(
                         " select c.nickname, c.image_url, c.total_like, c.request_count, c.styles " +
-                                " from Board b, Coordinator c " +
-                                " where b.coordinator.id = c.id " +
-                                " group by c.id " , Object[].class)
+                                " from Coordinator c " +
+                                " group by c.id " +
+                                " order by c.request_count desc " , Object[].class)
                 .setMaxResults(20)
                 .getResultList();
 
@@ -32,6 +33,32 @@ public class MainPageRepository {
             dto.setTotal_like((Integer) result[2]);
             dto.setRequest_count((Integer) result[3]);
             dto.setStyles((List<String>) result[4]);
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+    public List<UserMainPageRes> findUserMainPage() {
+        List<Object[]> resultList = em.createQuery(
+                        " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count, c.styles " +
+                                " from Board b, Coordinator c " +
+                                " where b.coordinator.id = c.id " +
+                                " group by c.id " , Object[].class)
+                .setMaxResults(20)
+                .getResultList();
+
+        List<UserMainPageRes> dtos = new ArrayList<>();
+
+        for (Object[] result : resultList) {
+            UserMainPageRes dto = new UserMainPageRes();
+
+            dto.setNickname((String) result[0]);
+            dto.setProfile_image((String) result[1]);
+            dto.setBoard_image((String) result[2]);
+            dto.setTotal_like((Integer) result[3]);
+            dto.setRequest_count((Integer) result[4]);
+            dto.setStyles((List<String>) result[5]);
             dtos.add(dto);
         }
 

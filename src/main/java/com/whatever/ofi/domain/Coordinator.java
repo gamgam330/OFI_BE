@@ -39,6 +39,7 @@ public class Coordinator {
 
     private String content;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private int height;
