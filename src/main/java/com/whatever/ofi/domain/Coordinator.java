@@ -50,6 +50,10 @@ public class Coordinator {
 
     private int request_count;
 
+    public void setTotal_like(int count) {
+        this.total_like += count;
+    }
+
     //==연관관계 메서드==//
     public void addBoard(Board board) {
         boards.add(board);

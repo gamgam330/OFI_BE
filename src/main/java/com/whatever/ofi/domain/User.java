@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.Enum.Shape;
 import com.whatever.ofi.config.StringListConverter;
+import com.whatever.ofi.requestDto.UserEditRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,12 +38,26 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Shape shape;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private BoardLike boardLike;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<BoardLike> boardLikes = new ArrayList<>();;
 
     @JsonIgnore
     @Convert(converter = StringListConverter.class)
     private List<String> styles = new ArrayList<>();
+
+    public void addBoardLike(BoardLike boardLike) {
+        this.boardLikes.add(boardLike);
+        boardLike.setUser(this);
+    }
+
+    public void edit(UserEditRequest dto) {
+        this.nickname = dto.getNickname();
+        this.height = dto.getHeight();
+        this.weight = dto.getWeight();
+        this.gender = dto.getGender();
+        this.shape = dto.getShape();
+        this.styles = dto.getStyles();
+    }
 
     @Builder
     public User(String email, String password, String nickname, int height, int weight,

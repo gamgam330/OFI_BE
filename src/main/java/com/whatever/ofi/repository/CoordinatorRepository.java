@@ -3,6 +3,7 @@ package com.whatever.ofi.repository;
 import com.whatever.ofi.domain.Board;
 import com.whatever.ofi.domain.Coordinator;
 import com.whatever.ofi.domain.User;
+import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
 import com.whatever.ofi.responseDto.UserMainPageRes;
 import org.springframework.stereotype.Repository;
@@ -62,23 +63,20 @@ public class CoordinatorRepository {
                 .build();
     }
 
-    public List<Board> findMainPage() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Board> cq = cb.createQuery(Board.class);
+    public List<CoordinatorAllBoardRes> findAllBoard(Long id) {
+        List<Object[]> resultList = em.createQuery(
+                "select b.id, b.title, b.image_url from Board b " +
+                        "where b.coordinator.id = :id ", Object[].class)
+                .setParameter("id", id)
+                .getResultList();
 
-        Root<Board> b = cq.from(Board.class);
+        List<CoordinatorAllBoardRes> response = new ArrayList<>();
 
-        Expression maxLike = cb.max(b.<Integer>get("like_count"));
+        for(Object[] result : resultList) {
+            response.add(new CoordinatorAllBoardRes(
+                    (Long) result[0], (String) result[1], (String) result[2]));
+        }
 
-        cq.groupBy(b.get("coordinator").get("id"));
-        //cq.having(cb.equal(maxLike, b.get("like_count")));
-
-        TypedQuery<Board> query = em.createQuery(cq);
-        return query.getResultList();
-//        return em.createQuery(
-//                " select b from Board b " +
-//                        " group by b.coordinator.id " +
-//                        " having max(b.like_count) = b.like_count ", Board.class)
-//                .getResultList();
+        return response;
     }
 }

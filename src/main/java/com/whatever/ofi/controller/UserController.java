@@ -1,9 +1,11 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.requestDto.LoginRequest;
-import com.whatever.ofi.requestDto.UserProfileRequest;
-import com.whatever.ofi.requestDto.UserRequest;
-import com.whatever.ofi.requestDto.UserStyleRequest;
+import com.whatever.ofi.repository.BoardLikeRepository;
+import com.whatever.ofi.requestDto.*;
+import com.whatever.ofi.responseDto.UserBoardLikeRes;
+import com.whatever.ofi.responseDto.UserMyPageRes;
+import com.whatever.ofi.service.BoardLikeService;
+import com.whatever.ofi.service.BoardService;
 import com.whatever.ofi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,6 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+
+    private final BoardLikeService boardLikeService;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -43,25 +48,32 @@ public class UserController {
         return "success";
     }
 
-//    @GetMapping("/mypage")
-//    public
+    @GetMapping("/mypage")
+    public UserMyPageRes showMyPage(@RequestParam Long id) {
+        return userService.findMyPage(id);
+    }
 
-//    @PostMapping("login")
-//    public String login (@RequestBody LoginRequest loginRequest) {
-//        String token = userService.login(loginRequest);
-//
-//        Cookie cookie = new Cookie("token", token);
-//
-//        cookie.setPath("/");
-//        cookie.setSecure(false);
-//        cookie.setMaxAge(86400); // 1일
-//        cookie.setHttpOnly(false);
-//
-//        System.out.println(cookie.getValue());
-//
-//        HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
-//        response.addCookie(cookie);
-//
-//        return "success";
-//    }
+    @GetMapping("/like")
+    public String like(@RequestParam("userId") Long userId,
+                       @RequestParam("boardId") Long boardId) {
+
+        boardLikeService.increaseLike(userId, boardId);
+        return "success";
+    }
+
+    @GetMapping("/unlike")
+    public String unLike(@RequestParam("userId") Long userId,
+                         @RequestParam("boardId") Long boardId) {
+        return boardLikeService.decreaseLike(userId, boardId);
+    }
+
+    @GetMapping("/board/like")
+    public List<UserBoardLikeRes> showLikeBoard(@RequestParam Long id) {
+        return userService.findBoardLike(id);
+    }
+
+    @PostMapping("/edit")
+    public String editProfile(@RequestBody UserEditRequest dto) {
+        return userService.editProfile(dto);
+    }
 }

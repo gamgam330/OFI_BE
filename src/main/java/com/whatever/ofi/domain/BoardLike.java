@@ -14,23 +14,25 @@ public class BoardLike {
     @Column(name = "board_like_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    public BoardLike(User user, Board board) {
+        user.addBoardLike(this);
+        board.addBoardLike(this);
+    }
 
-    public BoardLike(Board board, User user) {
-        this.board = board;
+    public void setUser(User user) {
         this.user = user;
     }
 
-    //==생성 메서드==//
-    /*public static BoardLike createLike(Board board, User user) {
-        BoardLike boardLike = new BoardLike(board, user);
-        return boardLike;
-    }*/
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
 }

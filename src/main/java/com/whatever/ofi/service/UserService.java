@@ -1,27 +1,39 @@
 package com.whatever.ofi.service;
 
 import com.whatever.ofi.config.Util;
+import com.whatever.ofi.domain.Board;
+import com.whatever.ofi.domain.BoardLike;
 import com.whatever.ofi.domain.User;
+import com.whatever.ofi.repository.BoardRepository;
 import com.whatever.ofi.requestDto.LoginRequest;
+import com.whatever.ofi.requestDto.UserEditRequest;
 import com.whatever.ofi.requestDto.UserProfileRequest;
 import com.whatever.ofi.requestDto.UserStyleRequest;
 import com.whatever.ofi.repository.UserRepository;
+import com.whatever.ofi.responseDto.UserBoardLikeRes;
+import com.whatever.ofi.responseDto.UserMyPageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {
-    private final UserRepository userRepository;
-
-    private final  BCryptPasswordEncoder encoder;
 
     @Value("${jwt.secret}")
     private String secretKey;
+
+    private final UserRepository userRepository;
+
+    private final BoardRepository boardRepository;
+
+    private final  BCryptPasswordEncoder encoder;
+
 
     @Transactional
     public void join(UserProfileRequest dto) {
@@ -42,5 +54,20 @@ public class UserService {
         String nickname = user.getNickname();
 
         return Util.createJwt(nickname, secretKey);
+    }
+
+    public UserMyPageRes findMyPage(Long id) {
+        return userRepository.findMyPage(id);
+    }
+
+    public List<UserBoardLikeRes> findBoardLike(Long id) {
+        return boardRepository.findBoardLike(id);
+    }
+
+    @Transactional
+    public String editProfile(UserEditRequest dto) {
+        User user = userRepository.findOne(dto.getId());
+        user.edit(dto); // 변경 감지
+        return "success";
     }
 }

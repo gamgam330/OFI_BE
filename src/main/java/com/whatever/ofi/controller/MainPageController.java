@@ -34,11 +34,6 @@ public class MainPageController {
         return mainPageService.searchCoordinatorMainPage();
     }
 
-    @PostMapping("/test")
-    public List<Board> testBoard() {
-        return coordinatorService.testShow();
-    }
-
     @GetMapping("test2")
     public Coordinator test2(@RequestParam Long id) {
         return coordinatorService.findOne(id);

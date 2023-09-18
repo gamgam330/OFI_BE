@@ -3,12 +3,12 @@ package com.whatever.ofi.responseDto;
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.Enum.Shape;
 import lombok.Builder;
+import lombok.Getter;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class UserMyPageRes {
     private String nickname;
 

@@ -9,6 +9,7 @@ import com.whatever.ofi.requestDto.CoordinatorRequest;
 import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
 import com.whatever.ofi.repository.CoordinatorRepository;
 import com.whatever.ofi.requestDto.LoginRequest;
+import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,7 +61,7 @@ public class CoordinatorService {
         return coordinatorRepository.findMyPage(id);
     }
 
-    public List<Board> testShow() {
-        return coordinatorRepository.findMainPage();
+    public List<CoordinatorAllBoardRes> findAllBoard(Long id) {
+        return coordinatorRepository.findAllBoard(id);
     }
 }

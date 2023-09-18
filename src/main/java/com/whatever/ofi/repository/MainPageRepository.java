@@ -44,7 +44,7 @@ public class MainPageRepository {
                         " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count, c.styles " +
                                 " from Board b, Coordinator c " +
                                 " where b.coordinator.id = c.id " +
-                                " group by c.id " , Object[].class)
+                                " order by c.request_count desc " , Object[].class)
                 .setMaxResults(20)
                 .getResultList();
 

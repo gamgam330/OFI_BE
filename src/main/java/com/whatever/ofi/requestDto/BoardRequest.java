@@ -14,6 +14,7 @@ public class BoardRequest {
     private String situation;
     private String content;
     private String image_url;
+    private String title;
 
     public Board toEntity() {
         return Board.builder()
@@ -23,6 +24,7 @@ public class BoardRequest {
                 .image_url(image_url)
                 .like_count(like_count)
                 .season(season)
+                .title(title)
                 .build();
     }
 }

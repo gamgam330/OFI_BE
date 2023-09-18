@@ -46,4 +46,6 @@ public class BoardService {
     public BoardDetailRes findBoardDetail(Long id) {
         return boardRepository.findBoardDetail(id);
     }
+
+
 }

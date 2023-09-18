@@ -2,6 +2,7 @@ package com.whatever.ofi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.apache.kafka.common.protocol.types.Field;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,12 +27,22 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BoardImage> urls = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<BoardLike> boardLikes = new ArrayList<>();
+
     private String style;
+
     private int like_count;
+
     private String season;
+
     private String situation;
+
     private String content;
+
     private String image_url;
+
+    private String title;
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
@@ -47,29 +58,36 @@ public class Board {
         boardImg.setBoard(this);
     }
 
+    public void addBoardLike(BoardLike boardLike) {
+        this.boardLikes.add(boardLike);
+        boardLike.setBoard(this);
+    }
+
     //==비지니스 로직==//
     public void addLike() {
         this.like_count += 1;
+        this.getCoordinator().setTotal_like(1);
     }
 
-    public void removeLike() {
-        int resultLike = this.like_count - 1;
-
-        if(resultLike < 0) {
-            return;
+    public String removeLike() {
+        if(this.like_count - 1 < 0) {
+            return "impossible";
         }
 
-        this.like_count = resultLike;
+        this.like_count -= 1;
+        this.getCoordinator().setTotal_like(-1);
+        return "possible";
     }
 
     @Builder
     public Board(String style, int like_count, String season,
-                 String situation, String content, String image_url){
+                 String situation, String content, String image_url, String title){
         this.style = style;
         this.like_count = like_count;
         this.season = season;
         this.situation = situation;
         this.content = content;
         this.image_url = image_url;
+        this.title = title;
     }
 }

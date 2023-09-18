@@ -3,13 +3,17 @@ package com.whatever.ofi.controller;
 import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
 import com.whatever.ofi.requestDto.CoordinatorRequest;
 import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
+import com.whatever.ofi.responseDto.BoardDetailRes;
+import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
+import com.whatever.ofi.service.BoardService;
 import com.whatever.ofi.service.CoordinatorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +22,8 @@ import javax.servlet.http.HttpSession;
 public class CoordinatorController {
 
     private final CoordinatorService coordinatorService;
+
+    private final BoardService boardService;
 
     private final BCryptPasswordEncoder encoder;
 
@@ -42,5 +48,11 @@ public class CoordinatorController {
     @GetMapping("/mypage")
     public CoordinatorMyPageRes showMyPage(@RequestParam Long id) {
         return coordinatorService.findMyPage(id);
+    }
+
+
+    @GetMapping("/board/all")
+    public List<CoordinatorAllBoardRes> allBoard(@RequestParam Long id) {
+        return coordinatorService.findAllBoard(id);
     }
 }
