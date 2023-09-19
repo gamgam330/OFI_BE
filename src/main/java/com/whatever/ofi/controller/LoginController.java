@@ -30,7 +30,7 @@ public class LoginController {
             token = coordinatorService.login(loginRequest);
 
             if(token == "Email Not Found" || token == "Password Not Equal") {
-                System.out.println("Not coor" + token + " " + loginRequest.getPassword());
+
                 return token;
             }
         }
