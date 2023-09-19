@@ -4,11 +4,8 @@ import com.whatever.ofi.config.Util;
 import com.whatever.ofi.domain.Board;
 import com.whatever.ofi.domain.Coordinator;
 import com.whatever.ofi.domain.User;
-import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
-import com.whatever.ofi.requestDto.CoordinatorRequest;
-import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
+import com.whatever.ofi.requestDto.*;
 import com.whatever.ofi.repository.CoordinatorRepository;
-import com.whatever.ofi.requestDto.LoginRequest;
 import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +60,13 @@ public class CoordinatorService {
 
     public List<CoordinatorAllBoardRes> findAllBoard(Long id) {
         return coordinatorRepository.findAllBoard(id);
+    }
+
+    @Transactional
+    public String editProfile(CoordinatorEditRequest dto) {
+        Coordinator coordinator = coordinatorRepository.findOne(dto.getId());
+        coordinator.edit(dto); // 변경 감지
+
+        return "success";
     }
 }

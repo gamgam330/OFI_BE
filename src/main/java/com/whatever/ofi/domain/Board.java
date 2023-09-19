@@ -27,7 +27,7 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<BoardImage> urls = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<BoardLike> boardLikes = new ArrayList<>();
 
     private String style;

@@ -3,6 +3,8 @@ package com.whatever.ofi.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whatever.ofi.Enum.Gender;
 import com.whatever.ofi.config.StringListConverter;
+import com.whatever.ofi.requestDto.CoordinatorEditRequest;
+import com.whatever.ofi.requestDto.UserEditRequest;
 import lombok.*;
 
 import javax.persistence.*;
@@ -58,6 +60,17 @@ public class Coordinator {
     public void addBoard(Board board) {
         boards.add(board);
         board.setCoordinator(this);
+    }
+
+    public void edit(CoordinatorEditRequest dto) {
+        this.nickname = dto.getNickname();
+        this.height = dto.getHeight();
+        this.weight = dto.getWeight();
+        this.gender = dto.getGender();
+        this.sns_url = dto.getSns_url();
+        this.content = dto.getContent();
+        this.image_url = dto.getImage_url();
+        this.styles = dto.getStyles();
     }
 
     @Builder

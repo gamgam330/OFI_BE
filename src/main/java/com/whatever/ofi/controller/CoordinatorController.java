@@ -1,5 +1,6 @@
 package com.whatever.ofi.controller;
 
+import com.whatever.ofi.requestDto.CoordinatorEditRequest;
 import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
 import com.whatever.ofi.requestDto.CoordinatorRequest;
 import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
@@ -54,5 +55,10 @@ public class CoordinatorController {
     @GetMapping("/board/all")
     public List<CoordinatorAllBoardRes> allBoard(@RequestParam Long id) {
         return coordinatorService.findAllBoard(id);
+    }
+
+    @PostMapping("/edit")
+    public String editProfile(@RequestBody CoordinatorEditRequest dto) {
+        return coordinatorService.editProfile(dto);
     }
 }

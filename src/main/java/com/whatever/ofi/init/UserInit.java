@@ -25,8 +25,6 @@ public class UserInit {
 
     private final CoordinatorService coordinatorService;
 
-
-
     private final BCryptPasswordEncoder encoder;
 
     @PostConstruct
