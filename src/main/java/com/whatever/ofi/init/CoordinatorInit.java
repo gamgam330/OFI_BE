@@ -20,7 +20,7 @@ public class CoordinatorInit {
     private final BCryptPasswordEncoder encoder;
     @PostConstruct
     public void coordinatorInit() {
-        CoordinatorProfileRequest dto1 = new CoordinatorProfileRequest("tes1@naver.com", encoder.encode("qwer1234"),
+        CoordinatorProfileRequest dto1 = new CoordinatorProfileRequest("test1@naver.com", encoder.encode("qwer1234"),
                 "테스트1", "www.naver.com", "test1.jpg", "잘부탁드립니다~!", Gender.MALE,  170, 60, 942, 24,  new ArrayList<>(List.of("미니멀", "힙합", "스포티")));
 
         CoordinatorProfileRequest dto2 = new CoordinatorProfileRequest("test2@naver.com", encoder.encode("qwer1234"),
@@ -36,10 +36,10 @@ public class CoordinatorInit {
                 "테스트5", "www.duckduckgo.com", "test5.jpg", "만나서 기쁩니다!", Gender.MALE, 175, 70, 799, 127, new ArrayList<>(List.of("힙합", "레트로")));
 
 
-        coordinatorService.join(dto1);
-        coordinatorService.join(dto2);
-        coordinatorService.join(dto3);
-        coordinatorService.join(dto4);
-        coordinatorService.join(dto5);
+        coordinatorService.join(dto1.toEntity());
+        coordinatorService.join(dto2.toEntity());
+        coordinatorService.join(dto3.toEntity());
+        coordinatorService.join(dto4.toEntity());
+        coordinatorService.join(dto5.toEntity());
     }
 }

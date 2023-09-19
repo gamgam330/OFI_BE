@@ -1,5 +1,7 @@
 package com.whatever.ofi.service;
 
+import com.whatever.ofi.repository.CoordinatorRepository;
+import com.whatever.ofi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,10 @@ public class EmailAuthService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
+    private final UserRepository userRepository;
+
+    private final CoordinatorRepository coordinatorRepository;
+
     public void saveData(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
     }
@@ -27,5 +33,6 @@ public class EmailAuthService {
         redisTemplate.opsForValue().set(key, value);
         redisTemplate.expire(key, timeoutInSeconds, TimeUnit.SECONDS);
     }
+
 }
 

@@ -1,12 +1,9 @@
 package com.whatever.ofi.controller;
 
-import com.whatever.ofi.requestDto.CoordinatorEditRequest;
-import com.whatever.ofi.requestDto.CoordinatorProfileRequest;
-import com.whatever.ofi.requestDto.CoordinatorRequest;
-import com.whatever.ofi.requestDto.CoordinatorStyleRequest;
-import com.whatever.ofi.responseDto.BoardDetailRes;
-import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
-import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
+import com.whatever.ofi.Enum.Gender;
+import com.whatever.ofi.domain.Coordinator;
+import com.whatever.ofi.requestDto.*;
+import com.whatever.ofi.responseDto.*;
 import com.whatever.ofi.service.BoardService;
 import com.whatever.ofi.service.CoordinatorService;
 import lombok.RequiredArgsConstructor;
@@ -39,11 +36,56 @@ public class CoordinatorController {
     }
 
     @PostMapping("/profile")
-    public String createProfile(@RequestBody CoordinatorProfileRequest dto, HttpSession session) {
-        dto.setEmail((String) session.getAttribute("email"));
-        dto.setPassword((String) session.getAttribute("password"));
-        coordinatorService.join(dto);
+    public String createProfile(@RequestBody CoordinatorInfoRequest dto, HttpSession session) {
+        session.setAttribute("nickname", dto.getNickname());
+        session.setAttribute("sns_url", dto.getSns_url());
+        session.setAttribute("image_url", dto.getImage_url());
+        session.setAttribute("content", dto.getContent());
+        session.setAttribute("gender", dto.getGender());
+        session.setAttribute("height", dto.getHeight());
+        session.setAttribute("weight", dto.getWeight());
+        session.setAttribute("total_like", dto.getTotal_like());
+        session.setAttribute("request_count", dto.getRequest_count());
         return "success";
+    }
+
+    @PostMapping("/styles")
+    public String addStyle(@RequestBody CoordinatorStyleRequest dto, HttpSession session) {
+        Coordinator coordinator = Coordinator.builder()
+                .styles(dto.getStyles())
+                .nickname((String) session.getAttribute("nickname"))
+                .email((String) session.getAttribute("email"))
+                .password((String) session.getAttribute("password"))
+                .sns_url((String) session.getAttribute("sns_url"))
+                .image_url((String) session.getAttribute("image_url"))
+                .total_like((Integer) session.getAttribute("total_like"))
+                .request_count((Integer) session.getAttribute("request_count"))
+                .height((Integer) session.getAttribute("height"))
+                .weight((Integer) session.getAttribute("weight"))
+                .gender((Gender) session.getAttribute("gender"))
+                .content((String) session.getAttribute("content"))
+                .build();
+
+        coordinatorService.join(coordinator);
+        return "success";
+    }
+
+    @GetMapping("/page")
+    public CoordinatorDetailRes showCoordinator(@RequestParam Long id) {
+        CoordinatorDetailRes coordinatorDetailRes = new CoordinatorDetailRes();
+
+        CoordinatorMyPageRes coordinatorMyPageRes = coordinatorService.findMyPage(id);
+        List<CoordinatorAllBoardRes> boards = coordinatorService.findAllBoard(id);
+
+        coordinatorDetailRes.setNickname(coordinatorMyPageRes.getNickname());
+        coordinatorDetailRes.setProfile_image(coordinatorMyPageRes.getImage_url());
+        coordinatorDetailRes.setContent(coordinatorMyPageRes.getContent());
+        coordinatorDetailRes.setStyles(coordinatorMyPageRes.getStyles());
+        coordinatorDetailRes.setRequest_count(coordinatorMyPageRes.getRequest_count());
+        coordinatorDetailRes.setTotal_like(coordinatorMyPageRes.getTotal_like());
+        coordinatorDetailRes.setBoards(boards);
+
+        return coordinatorDetailRes;
     }
 
     @GetMapping("/mypage")

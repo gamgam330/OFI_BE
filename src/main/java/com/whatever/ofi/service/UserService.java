@@ -36,8 +36,8 @@ public class UserService {
 
 
     @Transactional
-    public void join(UserProfileRequest dto) {
-        userRepository.save(dto.toEntity());
+    public void join(User user) {
+        userRepository.save(user);
     }
 
     public String login(LoginRequest loginRequest) {

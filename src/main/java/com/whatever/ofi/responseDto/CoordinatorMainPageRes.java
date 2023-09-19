@@ -7,6 +7,9 @@ import java.util.List;
 
 @Getter @Setter
 public class CoordinatorMainPageRes {
+
+    private Long coordinator_id;
+
     private String nickname; // profile
 
     private String profile_image; // profile

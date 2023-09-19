@@ -7,6 +7,7 @@ import com.whatever.ofi.domain.User;
 import com.whatever.ofi.requestDto.*;
 import com.whatever.ofi.repository.CoordinatorRepository;
 import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
+import com.whatever.ofi.responseDto.CoordinatorMainPageRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +30,8 @@ public class CoordinatorService {
     private String secretKey;
 
     @Transactional
-    public void join(CoordinatorProfileRequest dto) {
-        coordinatorRepository.save(dto.toEntity());
+    public void join(Coordinator coordinator) {
+        coordinatorRepository.save(coordinator);
     }
 
     public Coordinator findOne(Long id) {

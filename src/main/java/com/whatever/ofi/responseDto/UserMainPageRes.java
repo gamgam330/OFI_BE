@@ -10,6 +10,10 @@ import java.util.List;
 @Setter
 public class UserMainPageRes {
 
+    private Long board_id;
+
+    private Long coordinator_id;
+
     private String nickname; // profile
 
     private String profile_image; // profile

@@ -1,5 +1,8 @@
 package com.whatever.ofi.controller;
 
+import com.whatever.ofi.Enum.Gender;
+import com.whatever.ofi.Enum.Shape;
+import com.whatever.ofi.domain.User;
 import com.whatever.ofi.repository.BoardLikeRepository;
 import com.whatever.ofi.requestDto.*;
 import com.whatever.ofi.responseDto.UserBoardLikeRes;
@@ -41,10 +44,30 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public String createProfile(@RequestBody UserProfileRequest dto, HttpSession session){
-        dto.setEmail((String) session.getAttribute("email"));
-        dto.setPassword((String) session.getAttribute("password"));
-        userService.join(dto);
+    public String createProfile(@RequestBody UserInfoRequest dto, HttpSession session){
+        session.setAttribute("nickname", dto.getNickname());
+        session.setAttribute("gender", dto.getGender());
+        session.setAttribute("height", dto.getHeight());
+        session.setAttribute("weight", dto.getWeight());
+        session.setAttribute("shape", dto.getShape());
+
+        return "success";
+    }
+
+    @PostMapping("styles")
+    public String addStyle(@RequestBody UserStyleRequest dto, HttpSession session) {
+        User user = User.builder()
+                .email((String) session.getAttribute("email"))
+                .password((String) session.getAttribute("password"))
+                .nickname((String) session.getAttribute("nickname"))
+                .height((Integer) session.getAttribute("height"))
+                .weight((Integer) session.getAttribute("weight"))
+                .gender((Gender) session.getAttribute("gender"))
+                .shape((Shape) session.getAttribute("shape"))
+                .styles(dto.getStyles())
+                .build();
+
+        userService.join(user);
         return "success";
     }
 

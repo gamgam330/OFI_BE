@@ -44,11 +44,11 @@ public class UserInit {
         UserProfileRequest dto5 = new UserProfileRequest("test5@naver.com", encoder.encode("qwer1234"),
                 "테스트5", 175, 70, Gender.MALE, Shape.WAVE, new ArrayList<>(List.of("힙합", "레트로")));
 
-        userService.join(dto1);
-        userService.join(dto2);
-        userService.join(dto3);
-        userService.join(dto4);
-        userService.join(dto5);
+        userService.join(dto1.toEntity());
+        userService.join(dto2.toEntity());
+        userService.join(dto3.toEntity());
+        userService.join(dto4.toEntity());
+        userService.join(dto5.toEntity());
     }
 
 }

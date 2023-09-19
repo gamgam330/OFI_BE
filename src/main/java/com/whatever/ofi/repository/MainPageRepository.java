@@ -16,7 +16,7 @@ public class MainPageRepository {
 
     public List<CoordinatorMainPageRes> findCoordinatorMainPage() {
         List<Object[]> resultList = em.createQuery(
-                        " select c.nickname, c.image_url, c.total_like, c.request_count, c.styles " +
+                        " select c.nickname, c.image_url, c.total_like, c.request_count, c.styles, c.id " +
                                 " from Coordinator c " +
                                 " group by c.id " +
                                 " order by c.request_count desc " , Object[].class)
@@ -33,6 +33,7 @@ public class MainPageRepository {
             dto.setTotal_like((Integer) result[2]);
             dto.setRequest_count((Integer) result[3]);
             dto.setStyles((List<String>) result[4]);
+            dto.setCoordinator_id((Long) result[5]);
             dtos.add(dto);
         }
 
@@ -41,7 +42,7 @@ public class MainPageRepository {
 
     public List<UserMainPageRes> findUserMainPage() {
         List<Object[]> resultList = em.createQuery(
-                        " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count, c.styles " +
+                        " select c.nickname, c.image_url, b.image_url, c.total_like, c.request_count, c.styles, b.id, c.id" +
                                 " from Board b, Coordinator c " +
                                 " where b.coordinator.id = c.id " +
                                 " order by c.request_count desc " , Object[].class)
@@ -59,6 +60,8 @@ public class MainPageRepository {
             dto.setTotal_like((Integer) result[3]);
             dto.setRequest_count((Integer) result[4]);
             dto.setStyles((List<String>) result[5]);
+            dto.setBoard_id((Long) result[6]);
+            dto.setCoordinator_id((Long) result[7]);
             dtos.add(dto);
         }
 
