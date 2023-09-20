@@ -7,6 +7,8 @@ import com.whatever.ofi.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -17,8 +19,8 @@ public class BoardController {
 
     // 게시물 저장
     @PostMapping("/create")
-    public String createBoard(@RequestBody BoardRequest dto) {
-        boardService.join(dto);
+    public String createBoard(@RequestBody BoardRequest dto, HttpSession session) {
+        boardService.join(dto, (Long) session.getAttribute("id"));
         return "success";
     }
 

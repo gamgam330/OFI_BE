@@ -1,10 +1,13 @@
 package com.whatever.ofi.requestDto;
 
 import com.whatever.ofi.domain.Board;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class BoardRequest {
     private Long coordinator_id;

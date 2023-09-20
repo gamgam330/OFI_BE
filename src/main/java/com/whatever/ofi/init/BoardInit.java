@@ -47,15 +47,15 @@ public class BoardInit {
         BoardRequest dto10 = new BoardRequest(5L, "플로럴", 13, "가을",
                 "일상", "가을의 플로럴 스타일~", "test10.jpg", "선선한 가을 코디 한방에 정리~");
 
-        boardService.join(dto1);
-        boardService.join(dto2);
-        boardService.join(dto3);
-        boardService.join(dto4);
-        boardService.join(dto5);
-        boardService.join(dto6);
-        boardService.join(dto7);
-        boardService.join(dto8);
-        boardService.join(dto9);
-        boardService.join(dto10);
+        boardService.join(dto1, 1L);
+        boardService.join(dto2, 1L);
+        boardService.join(dto3, 2L);
+        boardService.join(dto4, 2L);
+        boardService.join(dto5, 3L);
+        boardService.join(dto6, 3L);
+        boardService.join(dto7, 4L);
+        boardService.join(dto8, 4L);
+        boardService.join(dto9, 5L);
+        boardService.join(dto10, 5L);
     }
 }

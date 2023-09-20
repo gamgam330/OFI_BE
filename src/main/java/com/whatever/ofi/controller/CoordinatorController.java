@@ -72,11 +72,11 @@ public class CoordinatorController {
     }
 
     @GetMapping("/page")//코디네이터 눌렀을 때 상세 정보 페이지 정보들
-    public CoordinatorDetailRes showCoordinator(@RequestParam Long id) {
+    public CoordinatorDetailRes showCoordinator(HttpSession session) {
         CoordinatorDetailRes coordinatorDetailRes = new CoordinatorDetailRes();
 
-        CoordinatorMyPageRes coordinatorMyPageRes = coordinatorService.findMyPage(id);
-        List<CoordinatorAllBoardRes> boards = coordinatorService.findAllBoard(id);
+        CoordinatorMyPageRes coordinatorMyPageRes = coordinatorService.findMyPage((Long) session.getAttribute("id"));
+        List<CoordinatorAllBoardRes> boards = coordinatorService.findAllBoard((Long) session.getAttribute("id"));
 
         coordinatorDetailRes.setNickname(coordinatorMyPageRes.getNickname());
         coordinatorDetailRes.setProfile_image(coordinatorMyPageRes.getImage_url());
@@ -90,18 +90,20 @@ public class CoordinatorController {
     }
 
     @GetMapping("/mypage")
-    public CoordinatorMyPageRes showMyPage(@RequestParam Long id) {
-        return coordinatorService.findMyPage(id);
+    public CoordinatorMyPageRes showMyPage(HttpSession session) {
+        return coordinatorService.findMyPage((Long) session.getAttribute("id"));
     }
 
 
     @GetMapping("/board/all")
-    public List<CoordinatorAllBoardRes> allBoard(@RequestParam Long id) {
-        return coordinatorService.findAllBoard(id);
+    public List<CoordinatorAllBoardRes> allBoard(HttpSession session) {
+
+        return coordinatorService.findAllBoard((Long) session.getAttribute("id"));
     }
 
     @PostMapping("/edit")
-    public String editProfile(@RequestBody CoordinatorEditRequest dto) {
-        return coordinatorService.editProfile(dto);
+    public String editProfile(@RequestBody CoordinatorEditRequest dto, HttpSession session) {
+
+        return coordinatorService.editProfile(dto, (Long) session.getAttribute("id"));
     }
 }

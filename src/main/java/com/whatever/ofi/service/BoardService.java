@@ -24,9 +24,9 @@ public class BoardService {
     private final CoordinatorRepository coordinatorRepository;
 
     @Transactional
-    public void join(BoardRequest dto) {
+    public void join(BoardRequest dto, Long coordinatorId) {
         Board board = dto.toEntity();
-        Coordinator coordinator = coordinatorRepository.findOne(dto.getCoordinator_id());
+        Coordinator coordinator = coordinatorRepository.findOne(coordinatorId);
 
         coordinator.addBoard(board);
         boardRepository.save(board);

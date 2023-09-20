@@ -56,6 +56,10 @@ public class UserService {
         return Util.createJwt(nickname, secretKey);
     }
 
+    public Long findId(String email) {
+        return userRepository.findId(email);
+    }
+
     public UserMyPageRes findMyPage(Long id) {
         return userRepository.findMyPage(id);
     }
@@ -65,8 +69,8 @@ public class UserService {
     }
 
     @Transactional
-    public String editProfile(UserEditRequest dto) {
-        User user = userRepository.findOne(dto.getId());
+    public String editProfile(UserEditRequest dto, Long userId) {
+        User user = userRepository.findOne(userId);
         user.edit(dto); // 변경 감지
         return "success";
     }

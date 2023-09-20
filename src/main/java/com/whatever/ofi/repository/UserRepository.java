@@ -24,6 +24,14 @@ public class UserRepository {
         return em.find(User.class, id);
     }
 
+    public Long findId(String email) {
+        return em.createQuery(
+                        "select u.id from User u " +
+                                "where u.email = :email", Long.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
 
     public List<String> findByEmail(String email) {
         return em.createQuery("select u.email from User u where u.email = :email ", String.class)

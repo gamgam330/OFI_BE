@@ -73,31 +73,28 @@ public class UserController {
     }
 
     @GetMapping("/mypage")
-    public UserMyPageRes showMyPage(@RequestParam Long id) {
-        return userService.findMyPage(id);
+    public UserMyPageRes showMyPage(HttpSession session) {
+        return userService.findMyPage((Long) session.getAttribute("id"));
     }
 
     @GetMapping("/like")
-    public String like(@RequestParam("userId") Long userId,
-                       @RequestParam("boardId") Long boardId) {
-
-        boardLikeService.increaseLike(userId, boardId);
+    public String like(@RequestParam("boardId") Long boardId, HttpSession session) {
+        boardLikeService.increaseLike((Long) session.getAttribute("id"), boardId);
         return "success";
     }
 
     @GetMapping("/unlike")
-    public String unLike(@RequestParam("userId") Long userId,
-                         @RequestParam("boardId") Long boardId) {
-        return boardLikeService.decreaseLike(userId, boardId);
+    public String unLike(@RequestParam("boardId") Long boardId, HttpSession session) {
+        return boardLikeService.decreaseLike((Long) session.getAttribute("id"), boardId);
     }
 
     @GetMapping("/board/like")
-    public List<UserBoardLikeRes> showLikeBoard(@RequestParam Long id) {
-        return userService.findBoardLike(id);
+    public List<UserBoardLikeRes> showLikeBoard(HttpSession session) {
+        return userService.findBoardLike((Long) session.getAttribute("id"));
     }
 
     @PostMapping("/edit")
-    public String editProfile(@RequestBody UserEditRequest dto) {
-        return userService.editProfile(dto);
+    public String editProfile(@RequestBody UserEditRequest dto, HttpSession session) {
+        return userService.editProfile(dto, (Long) session.getAttribute("id"));
     }
 }

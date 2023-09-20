@@ -3,6 +3,7 @@ package com.whatever.ofi.controller;
 import com.whatever.ofi.requestDto.LoginRequest;
 import com.whatever.ofi.service.CoordinatorService;
 import com.whatever.ofi.service.UserService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -10,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +23,10 @@ public class LoginController {
     private final CoordinatorService coordinatorService;
 
     @PostMapping("") // 여기서 사용자, 코디네이터 id 값 넘기기
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public String login(@RequestBody LoginRequest loginRequest, HttpSession session) {
         String token = userService.login(loginRequest);
+        String type;
+        Long id;
 
         if(token == "Email Not Found" || token == "Password Not Equal") {
             System.out.println("Not user" + token + " " + loginRequest.getPassword());
@@ -30,9 +34,14 @@ public class LoginController {
             token = coordinatorService.login(loginRequest);
 
             if(token == "Email Not Found" || token == "Password Not Equal") {
-
                 return token;
+            }else {
+                id = coordinatorService.findId(loginRequest.getEmail());
+                type = "coordinator";
             }
+        }else {
+            id = userService.findId(loginRequest.getEmail());
+            type = "user";
         }
 
         Cookie cookie = new Cookie("token", token);
@@ -44,9 +53,19 @@ public class LoginController {
 
         System.out.println(cookie.getValue());
 
+        session.setAttribute("id", id);
+        session.setAttribute("type", type);
+
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.addCookie(cookie);
 
         return "success";
+    }
+
+    @GetMapping("/test")
+    public String test(HttpSession session) {
+
+        String res = Long.toString((Long) session.getAttribute("id"));
+        return res + ((String) session.getAttribute("type"));
     }
 }

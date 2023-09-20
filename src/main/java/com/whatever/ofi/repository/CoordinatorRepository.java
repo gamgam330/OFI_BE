@@ -29,6 +29,14 @@ public class CoordinatorRepository {
         return em.find(Coordinator.class, id);
     }
 
+    public Long findId(String email) {
+        return em.createQuery(
+                "select c.id from Coordinator c " +
+                        "where c.email = :email", Long.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
     public List<String> findByEmail(String email) {
         return em.createQuery("select c.email from Coordinator c where c.email = :email ", String.class)
                 .setParameter("email", email)

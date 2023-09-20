@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class CoordinatorService {
+public class  CoordinatorService {
 
     private final CoordinatorRepository coordinatorRepository;
 
@@ -36,6 +36,10 @@ public class CoordinatorService {
 
     public Coordinator findOne(Long id) {
         return coordinatorRepository.findOne(id);
+    }
+
+    public Long findId(String email) {
+        return coordinatorRepository.findId(email);
     }
 
     public String login(LoginRequest loginRequest) {
@@ -64,8 +68,8 @@ public class CoordinatorService {
     }
 
     @Transactional
-    public String editProfile(CoordinatorEditRequest dto) {
-        Coordinator coordinator = coordinatorRepository.findOne(dto.getId());
+    public String editProfile(CoordinatorEditRequest dto, Long coordinatorId) {
+        Coordinator coordinator = coordinatorRepository.findOne(coordinatorId);
         coordinator.edit(dto); // 변경 감지
 
         return "success";
