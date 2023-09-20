@@ -20,7 +20,7 @@ public class LoginController {
 
     private final CoordinatorService coordinatorService;
 
-    @PostMapping("")
+    @PostMapping("") // 여기서 사용자, 코디네이터 id 값 넘기기
     public String login(@RequestBody LoginRequest loginRequest) {
         String token = userService.login(loginRequest);
 

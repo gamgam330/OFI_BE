@@ -66,11 +66,12 @@ public class CoordinatorController {
                 .content((String) session.getAttribute("content"))
                 .build();
 
+        session.invalidate(); // 세션에 있는 속성 삭제
         coordinatorService.join(coordinator);
         return "success";
     }
 
-    @GetMapping("/page")
+    @GetMapping("/page")//코디네이터 눌렀을 때 상세 정보 페이지 정보들
     public CoordinatorDetailRes showCoordinator(@RequestParam Long id) {
         CoordinatorDetailRes coordinatorDetailRes = new CoordinatorDetailRes();
 

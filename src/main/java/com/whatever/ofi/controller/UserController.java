@@ -67,6 +67,7 @@ public class UserController {
                 .styles(dto.getStyles())
                 .build();
 
+        session.invalidate(); // 세션에 있는 속성 삭제
         userService.join(user);
         return "success";
     }
