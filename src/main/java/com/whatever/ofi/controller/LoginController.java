@@ -28,6 +28,8 @@ public class LoginController {
         String type;
         Long id;
 
+        Cookie option;
+
         if(token == "Email Not Found" || token == "Password Not Equal") {
             System.out.println("Not user" + token + " " + loginRequest.getPassword());
 
@@ -38,10 +40,12 @@ public class LoginController {
             }else {
                 id = coordinatorService.findId(loginRequest.getEmail());
                 type = "coordinator";
+                option = new Cookie("type", "coordinator");
             }
         }else {
             id = userService.findId(loginRequest.getEmail());
             type = "user";
+            option = new Cookie("type", "user");
         }
 
         Cookie cookie = new Cookie("token", token);
@@ -51,6 +55,12 @@ public class LoginController {
         cookie.setMaxAge(86400); // 1일
         cookie.setHttpOnly(false);
 
+        option.setPath("/");
+        option.setSecure(false);
+        option.setMaxAge(86400); // 1일
+        option.setHttpOnly(false);
+
+
         System.out.println(cookie.getValue());
 
         session.setAttribute("id", id);
@@ -58,6 +68,7 @@ public class LoginController {
 
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.addCookie(cookie);
+        response.addCookie(option);
 
         return "success";
     }
