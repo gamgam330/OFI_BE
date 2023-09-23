@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CoordinatorWithBoard {
+    private Long coorid;
 
     private String coornickname;
 
@@ -16,6 +17,8 @@ public class CoordinatorWithBoard {
     private int coorrequestCount;
 
     private List<String> coorstyles;
+
+    private Long boardid;
 
     private String boardseason;
 
