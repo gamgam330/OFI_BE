@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,36 +47,24 @@ public class WebSecurityConfig {
 //                .antMatchers("/main/user").permitAll()
                 // --------------------------------------------
 //                .anyRequest().authenticated() // 나머지 API에 대해서는 인증을 요구
+
                 .and()
                 .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class);
+
+
         http
                 .cors(cors -> cors.disable())
-                .csrf(csrf -> csrf.disable());
-
-        http
+                .csrf(csrf -> csrf.disable())
                 .logout()
                 .logoutUrl("/logout")
-                .addLogoutHandler((request, response, authentication) -> {
-                    HttpSession session = request.getSession();
-                    if (session != null) {
-                        session.invalidate();
-                    }
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    System.out.print("Success");
                 })
-                .deleteCookies("JSESSIONID", "token"); // 로그아웃 후 삭제할 쿠키 지정
-
+                .deleteCookies("JSESSIONID", "token") // 로그아웃 후 삭제할 쿠키 지정
+                .permitAll() // /logout 엔드포인트에 대한 접근은 모든 사용자에게 허용
+                .and()
+                .httpBasic().disable();
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // 허용할 오리진 설정
-        configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
-        configuration.addAllowedHeader("*"); // 모든 HTTP 헤더 허용
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/logout", configuration);
-
-        return source;
-    }
 }
