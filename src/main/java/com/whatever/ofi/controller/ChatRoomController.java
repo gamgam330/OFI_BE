@@ -3,6 +3,8 @@ package com.whatever.ofi.controller;
 import com.whatever.ofi.config.Util;
 import com.whatever.ofi.domain.ChatRoom;
 import com.whatever.ofi.repository.ChatRoomRepository;
+import com.whatever.ofi.responseDto.MessagesResponse;
+import com.whatever.ofi.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -15,29 +17,45 @@ import java.util.List;
 @Controller
 @RequestMapping("/chat")
 public class ChatRoomController {
-
     @Value("${jwt.secret}")
     private String secretKey;
+    private final ChatService chatService;
+    private final Util util;
 
-    private final ChatRoomRepository chatRoomRepository;
-
-    @GetMapping("/rooms")
-    @ResponseBody
-    public List<ChatRoom> room() {
-        List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
-        chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
-        return chatRooms;
-    }
-
+    //방만들기
     @PostMapping("/room")
-    @ResponseBody
-    public ChatRoom createRoom(@RequestParam String name) {
-        return chatRoomRepository.createChatRoom(name);
+    public String createRoom(@RequestParam String yournickname, @CookieValue("token") String token) {
+        String mynickName = util.getNickname(token, secretKey);
+        System.out.print(mynickName);
+        return chatService.createChatRoom(mynickName, yournickname);
     }
 
-    @GetMapping("/room/{roomId}")
-    @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId) {
-        return chatRoomRepository.findRoomById(roomId);
+    //읽음 처리 기능
+    @GetMapping("/readChat")
+    public void readMessage(Long chatid){
+        chatService.readChat(chatid);
+    }
+
+    //message가져오기
+    @GetMapping("/messages")
+    public MessagesResponse getMessages(@CookieValue("token") String token, String roomid, String yournickname){
+        String myNickname = util.getNickname(token, secretKey);
+        return chatService.getMessages(myNickname, roomid, yournickname);
+    }
+
+    @GetMapping("/main")
+    public List<ChatRoom> getChatRooms(@CookieValue("token") String token){
+        String myNickname = util.getNickname(token, secretKey);
+        return chatService.getChatingRooms(myNickname);
+    }
+
+    @GetMapping("/all")
+    public List<ChatRoom> getAllRooms(){
+        return chatService.getAllRooms();
+    }
+
+    @GetMapping("/find")
+    public ChatRoom findRoom(String UUID){
+        return chatService.findRoom(UUID);
     }
 }

@@ -11,6 +11,8 @@ import com.whatever.ofi.requestDto.UserProfileRequest;
 import com.whatever.ofi.requestDto.UserStyleRequest;
 import com.whatever.ofi.repository.UserRepository;
 import com.whatever.ofi.responseDto.UserBoardLikeRes;
+import com.whatever.ofi.responseDto.UserInfoRes;
+import com.whatever.ofi.responseDto.UserLikeTotalRes;
 import com.whatever.ofi.responseDto.UserMyPageRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -64,8 +66,16 @@ public class UserService {
         return userRepository.findMyPage(id);
     }
 
-    public List<UserBoardLikeRes> findBoardLike(Long id) {
+    public UserLikeTotalRes findBoardLike(Long id) {
         return boardRepository.findBoardLike(id);
+    }
+
+    public UserInfoRes findInfo(Long id) {
+        return userRepository.findInfo(id);
+    }
+
+    public List<Long> findBoardLikeById(Long id) {
+        return userRepository.findBoardLikeById(id);
     }
 
     @Transactional

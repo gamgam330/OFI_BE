@@ -7,6 +7,7 @@ import com.whatever.ofi.domain.User;
 import com.whatever.ofi.requestDto.*;
 import com.whatever.ofi.repository.CoordinatorRepository;
 import com.whatever.ofi.responseDto.CoordinatorAllBoardRes;
+import com.whatever.ofi.responseDto.CoordinatorInfoRes;
 import com.whatever.ofi.responseDto.CoordinatorMainPageRes;
 import com.whatever.ofi.responseDto.CoordinatorMyPageRes;
 import lombok.RequiredArgsConstructor;
@@ -65,6 +66,14 @@ public class  CoordinatorService {
 
     public List<CoordinatorAllBoardRes> findAllBoard(Long id) {
         return coordinatorRepository.findAllBoard(id);
+    }
+
+    public CoordinatorInfoRes findInfo(Long id) {
+        return coordinatorRepository.findInfo(id);
+    }
+
+    public String findNicknameById(Long id) {
+        return coordinatorRepository.findOne(id).getNickname();
     }
 
     @Transactional

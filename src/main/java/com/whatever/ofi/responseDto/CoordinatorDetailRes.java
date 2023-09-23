@@ -21,5 +21,7 @@ public class CoordinatorDetailRes {
 
     private List<String> styles;
 
+    private List<Long> user_board_id;
+
     List<CoordinatorAllBoardRes> boards = new ArrayList<>();
 }

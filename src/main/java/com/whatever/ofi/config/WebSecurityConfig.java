@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.servlet.http.HttpSession;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -45,6 +47,21 @@ public class WebSecurityConfig {
         http
                 .cors(cors -> cors.disable())
                 .csrf(csrf -> csrf.disable());
+
+        http
+                .logout()
+                .logoutUrl("/logout")
+                .addLogoutHandler((request, response, authentication) -> {
+
+                    HttpSession session = request.getSession();
+                    if (session != null) {
+                        session.invalidate();
+                    }
+                })
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    response.sendRedirect("/login");
+                })
+                .deleteCookies("JSESSIONID", "remember-me"); // 로그아웃 후 삭제할 쿠키 지정
         return http.build();
     }
 }

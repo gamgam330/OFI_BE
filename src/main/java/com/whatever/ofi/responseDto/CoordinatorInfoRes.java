@@ -4,11 +4,10 @@ import com.whatever.ofi.Enum.Gender;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class CoordinatorMyPageRes {
+public class CoordinatorInfoRes {
     private String nickname;
 
     private String sns_url;
@@ -17,27 +16,24 @@ public class CoordinatorMyPageRes {
 
     private String content;
 
+    private Gender gender;
+
     private int height;
 
     private int weight;
 
-    private int total_like;
-
-    private int request_count;
-
-    private List<String> styles = new ArrayList<>();
+    private List<String> styles;
 
     @Builder
-    public CoordinatorMyPageRes(String nickname, String sns_url, String image_url, String content,
-                                int height, int weight, int total_like, int request_count, List<String> styles){
+    public CoordinatorInfoRes(String nickname, String sns_url, String image_url,
+                              String content, Gender gender, int height, int weight, List<String> styles) {
         this.nickname = nickname;
         this.sns_url = sns_url;
         this.image_url = image_url;
         this.content = content;
+        this.gender = gender;
         this.height = height;
         this.weight = weight;
-        this.total_like = total_like;
-        this.request_count = request_count;
-        this.styles.addAll(styles);
+        this.styles = styles;
     }
 }
