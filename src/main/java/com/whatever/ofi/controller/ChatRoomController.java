@@ -3,6 +3,7 @@ package com.whatever.ofi.controller;
 import com.whatever.ofi.config.Util;
 import com.whatever.ofi.domain.ChatRoom;
 import com.whatever.ofi.repository.ChatRoomRepository;
+import com.whatever.ofi.requestDto.ChatRoomDTO;
 import com.whatever.ofi.responseDto.MessagesResponse;
 import com.whatever.ofi.service.ChatService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/chat")
 public class ChatRoomController {
     @Value("${jwt.secret}")
@@ -23,7 +24,7 @@ public class ChatRoomController {
     private final Util util;
 
     //방만들기
-    @PostMapping("/room")
+    @GetMapping("/room")
     public String createRoom(@RequestParam String yournickname, @CookieValue("token") String token) {
         String mynickName = util.getNickname(token, secretKey);
         System.out.print(mynickName);
@@ -44,8 +45,9 @@ public class ChatRoomController {
     }
 
     @GetMapping("/main")
-    public List<ChatRoom> getChatRooms(@CookieValue("token") String token){
+    public List<ChatRoomDTO> getChatRooms(@CookieValue("token") String token){
         String myNickname = util.getNickname(token, secretKey);
+        System.out.println(myNickname);
         return chatService.getChatingRooms(myNickname);
     }
 

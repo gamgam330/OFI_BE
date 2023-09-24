@@ -2,6 +2,7 @@ package com.whatever.ofi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.whatever.ofi.Enum.Gender;
+import com.whatever.ofi.requestDto.ChatRoomDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,5 +53,15 @@ public class ChatRoom{
         this.fiter = fiter;
         this.outer = outer;
         this.histories = histories;
+    }
+
+    public ChatRoomDTO toDTO() {
+        ChatRoomDTO dto = new ChatRoomDTO();
+        dto.setId(this.id);
+        dto.setRoomId(this.roomId);
+        dto.setFiter(this.fiter);
+        dto.setOuter(this.outer);
+        dto.setHistories(this.histories);
+        return dto;
     }
 }

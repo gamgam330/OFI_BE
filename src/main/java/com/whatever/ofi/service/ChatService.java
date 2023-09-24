@@ -8,12 +8,14 @@ import com.whatever.ofi.repository.ChatRoomRepository;
 import com.whatever.ofi.repository.CoordinatorRepository;
 import com.whatever.ofi.repository.UserRepository;
 import com.whatever.ofi.requestDto.ChatMessage;
+import com.whatever.ofi.requestDto.ChatRoomDTO;
 import com.whatever.ofi.responseDto.MessagesResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import com.whatever.ofi.domain.User;
@@ -55,8 +57,9 @@ public class ChatService {
     public Long saveMessage(ChatMessage message) {
         ChatRoom chatRoom = findRoomId(message.getRoomId());
         User sender = getUserByNickname(message.getSender());
+        Date now = new Date();
         String _message = message.getMessage();
-        LocalDateTime createdAt = message.getCreateAt();
+        LocalDateTime createdAt = LocalDateTime.now();
         Coordinator send = null;
         if (sender == null){
             send = getCoordinatorByNickname(message.getSender());
@@ -121,13 +124,15 @@ public class ChatService {
         return !chat.getSender().equals(me) && chat.getReadCount() == 1;
     }
 
-    public List<ChatRoom> getChatingRooms(String nickname){
+    public List<ChatRoomDTO> getChatingRooms(String nickname){
         User user = getUserByNickname(nickname);
         Coordinator coordinator = null;
-        List<ChatRoom> chatRoom = chatRoomRepository.findChatRoomsByUser(user);
-        if (chatRoom == null){
+        List<ChatRoomDTO> chatRoom = null;
+        if(user == null){
             coordinator = getCoordinatorByNickname(nickname);
             chatRoom = chatRoomRepository.findChatRoomsByCoordinator(coordinator);
+        }else {
+            chatRoom = chatRoomRepository.findChatRoomsByUser(user);
         }
         return chatRoom;
     }

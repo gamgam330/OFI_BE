@@ -28,8 +28,6 @@ public class ChatController {
      */
     @MessageMapping("/chat/message")
     public void message(ChatMessage message) {
-        Long chatId = chatService.saveMessage(message);
-        System.out.println(message.getRoomId());
-        redisTemplate.convertAndSend( "/sub/chatroom/"+ message.getRoomId(), SendChatMessage.of(chatId, message));
+        redisTemplate.convertAndSend( channelTopic.getTopic(), message);
     }
 }

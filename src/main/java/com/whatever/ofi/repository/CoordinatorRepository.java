@@ -111,8 +111,14 @@ public class CoordinatorRepository {
     }
 
     public Coordinator findByNickName(String nickname){
-        return em.createQuery(" select c from Coordinator c where c.nickname = :nickname ", Coordinator.class)
+        List<Coordinator> userList = em.createQuery("SELECT c FROM Coordinator c where c.nickname = :nickname ", Coordinator.class)
                 .setParameter("nickname", nickname)
-                .getSingleResult();
+                .getResultList();
+
+        if (!userList.isEmpty()) {
+            return userList.get(0); // 결과가 있다면 첫 번째 요소 반환
+        } else {
+            return null; // 결과가 없으면 null 반환
+        }
     }
 }

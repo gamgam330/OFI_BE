@@ -89,8 +89,14 @@ public class UserRepository {
     }
 
     public User findByNickName(String nickname){
-        return em.createQuery(" select u from User u where u.nickname = :nickname ", User.class)
+        List<User> userList = em.createQuery("SELECT u FROM User u WHERE u.nickname = :nickname", User.class)
                 .setParameter("nickname", nickname)
-                .getSingleResult();
+                .getResultList();
+
+        if (!userList.isEmpty()) {
+            return userList.get(0); // 결과가 있다면 첫 번째 요소 반환
+        } else {
+            return null; // 결과가 없으면 null 반환
+        }
     }
 }

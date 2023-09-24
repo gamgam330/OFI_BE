@@ -45,7 +45,6 @@ public class WebSecurityConfig {
 //                .antMatchers("/board/create").permitAll()
 //                .antMatchers("/main/test").permitAll()
 //                .antMatchers("/main/user").permitAll()
-                // --------------------------------------------
 //                .anyRequest().authenticated() // 나머지 API에 대해서는 인증을 요구
 
                 .and()
@@ -53,7 +52,8 @@ public class WebSecurityConfig {
 
 
         http
-                .cors(cors -> cors.disable())
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .csrf(csrf -> csrf.disable())
                 .logout()
                 .logoutUrl("/logout")
@@ -66,5 +66,17 @@ public class WebSecurityConfig {
                 .httpBasic().disable();
         return http.build();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
