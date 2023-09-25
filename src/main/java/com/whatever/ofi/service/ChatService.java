@@ -57,7 +57,6 @@ public class ChatService {
     public Long saveMessage(ChatMessage message) {
         ChatRoom chatRoom = findRoomId(message.getRoomId());
         User sender = getUserByNickname(message.getSender());
-        Date now = new Date();
         String _message = message.getMessage();
         LocalDateTime createdAt = LocalDateTime.now();
         Coordinator send = null;
@@ -65,7 +64,7 @@ public class ChatService {
             send = getCoordinatorByNickname(message.getSender());
             return saveChatMessage(chatRoom, null, send, _message, createdAt);
         }
-        return saveChatMessage(chatRoom, sender, null,_message, createdAt);
+        return saveChatMessage(chatRoom, sender, null, _message, createdAt);
     }
 
     public ChatRoom findRoomId(String roomid) {
@@ -106,7 +105,6 @@ public class ChatService {
         User fiter = getUserByNickname(myNickname);
         Coordinator outer = getCoordinatorByNickname(yourNickname);
         ChatRoom chatRoom = findRoomId(roomUUID);
-        reduceReadCountOfChats(chatRoom, fiter);
         return MessagesResponse.of(outer, chatRoom);
     }
 
